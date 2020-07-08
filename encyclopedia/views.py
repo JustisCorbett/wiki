@@ -21,3 +21,19 @@ def entry(request, title):
         "html": html
     })
 
+def search(request):
+    keyword = request.GET.get('q', '')
+    match = util.get_entry(keyword)
+
+    if not match:
+        entries = util.list_entries()
+        res = [i for i in entries if keyword in i]
+        return render(request, "encyclopedia/search.html", {
+            "results": res
+        })
+    else:
+        return render(request, "encyclopedia/search.html", {
+            "results": match
+        })
+
+def newPage

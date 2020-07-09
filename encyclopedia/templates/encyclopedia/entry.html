@@ -7,7 +7,12 @@
 {% block body %}
 
     {% if html %}
-        {{ html|safe }}
+        <div>
+            <a href="{% url "edit" title=title %}">Edit</a>
+        </div>
+        <div>
+            {{ html|safe }}
+        </div>
     {% else %}
         <h1>Page not Found</h1>
     {% endif %}

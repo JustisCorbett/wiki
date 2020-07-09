@@ -1,19 +1,19 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Create Page
+    Edit Page
 {% endblock %}
 
 {% block body %}
-    <h1>Create Page</h1>
+    <h1>Edit Page</h1>
     <form action="{% url "savepage" %}" method="POST">{% csrf_token %}
         <div class="form-group">
             <label class="hidden" for="title">Title</label>
-            <input class="title" type="text" id="title" name="title" placeholder="Title">
+            <input class="title" type="text" id="title" name="title" value="{{ title }}">
         </div>
         <div class="form-group">
             <label class="hidden" for="create-entry">Content</label>
-            <textarea class="create-entry" id="create-entry" name="entry" placeholder="Create new entry" cols="35" rows="15"></textarea>
+            <textarea class="create-entry" id="create-entry" name="entry" cols="35" rows="15">{{ entry }}</textarea>
         </div>
         <div>
             <button id="save-entry">Save</button>

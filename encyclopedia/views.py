@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from markdown2 import Markdown
 from . import util
+import random
 
 
 def index(request):
@@ -55,7 +56,18 @@ def save_page(request):
         })
     else:
         util.save_entry(title, entry)
-        message = "Success: Entry was successfully saved."
-        return render(request, "encyclopedia/result.html", {
-            "message": message
-        })
+        return redirect(reverse("entry", kwargs={"title":title}))
+
+def edit(request, title):
+    entry = util.get_entry(title)
+
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "entry": entry
+    })
+
+def ran_entry(request):
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+
+    return redirect(reverse("entry", kwargs={"title":random_entry}))

@@ -22,7 +22,7 @@ def entry(request, title):
     })
 
 def search(request):
-    keyword = request.GET.get('q', '')
+    keyword = request.GET.get("q", "")
     match = util.get_entry(keyword)
 
     if not match:
@@ -36,4 +36,26 @@ def search(request):
             "results": match
         })
 
-def newPage
+def new_page(request):
+    return render(request, "encyclopedia/newpage.html")
+
+def save_page(request):
+    title = request.POST.get("title", "")
+    entry = request.POST.get("entry", "")
+
+    if not title:
+        message = "Error: Please enter a title when making a new entry."
+        return render(request, "encyclopedia/result.html", {
+            "message": message
+        })
+    elif not entry:
+        message = "Error: Blank entry is not allowed."
+        return render(request, "encyclopedia/result.html", {
+            "message": message
+        })
+    else:
+        util.save_entry(title, entry)
+        message = "Success: Entry was successfully saved."
+        return render(request, "encyclopedia/result.html", {
+            "message": message
+        })
